@@ -220,16 +220,27 @@ class Paotui extends BaseService
     {
         $user = User::getByUid($id);
         $original_grade = $user->judge;
+        $original_judgeNum = $user->judgeNum;
 
-        $g = self::GradeArithmetic($original_grade,$grade);
+        $g = self::GradeArithmetic($original_grade,$grade,$original_judgeNum);
 
         $user->save([
             'grade' => $g,
-            $field => JudgeStatusEnum::judge],['id'=>$id]);
+            $field => JudgeStatusEnum::judge,
+            'judgeNum' => $original_judgeNum+1],['id'=>$id]);
     }
 
-    private function GradeArithmetic($org_grade,$grade)
+    private function GradeArithmetic($org_grade,$grade,$judgeNum)
     {
+        if($judgeNum<=3)
+        {
+            $grade = 0.7*$org_grade+0.3*$grade;
+        }
+        else
+        {
+            $grade = (3/$judgeNum)*$grade+[($judgeNum-3)/$judgeNum]*$org_grade;
+        }
+        
         return $grade;
     }
 }

@@ -11,7 +11,7 @@ namespace app\api\model;
 
 class User extends BaseModel
 {
-    protected $hidden = ['id','openid','extend','study_id','study_password','from','create_time','status','scope'];
+    protected $hidden = ['id','openid','extend','study_id','study_password','from','create_time','status','scope','judgeNum'];
 
     public function getHeadImgAttr($value,$data)
     {
