@@ -11,6 +11,7 @@ namespace app\api\service;
 use app\api\model\Paotui as PaotuiModel;
 use app\api\service\Token as TokenService;
 use app\api\model\Xianyu as XianyuModel;
+use app\lib\enum\JudgeStatusEnum;
 use think\Exception;
 
 class Publish
@@ -36,9 +37,21 @@ class Publish
     public function showPaotui()
     {
         $currentid = TokenService::getCurrentUid();
-        $paotui = PaotuiModel::fingByProID($currentid);
+        $paotuis = PaotuiModel::fingByProID($currentid);
 
-        return $paotui;
+        foreach ($paotuis as $paotui)
+        {
+            if($paotui['pro_judge'] == JudgeStatusEnum::unjudge)
+            {
+                $paotui['ranked'] = JudgeStatusEnum::unjudge - 1;
+            }
+            else
+            {
+                $paotui['ranked'] = JudgeStatusEnum::judge - 1;
+            }
+        }
+
+        return $paotuis;
     }
 
     public function showXianyu()

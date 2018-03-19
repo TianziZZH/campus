@@ -10,12 +10,13 @@ namespace app\api\model;
 
 use app\api\service\BaseService;
 use app\api\service\Token as TokenService;
+use app\lib\enum\JudgeStatusEnum;
 use app\lib\enum\TaskStatusEnum;
 use think\Db;
 
 class Paotui extends BaseModel
 {
-    protected $hidden = ['pro_id','rec_id','school','status','create_time','delete_time','update_time'];
+    protected $hidden = ['pro_id','rec_id','school','status','create_time','delete_time','update_time','pro_judge','rec_judge'];
     protected $autoWriteTimestamp = true;
 
     public function user()
@@ -55,21 +56,38 @@ class Paotui extends BaseModel
 
     public static function fingByProID($id)
     {
-        $paotui = self::findBy('pro_id',$id)
+        $paotuis = self::findBy('pro_id',$id)
                         ->order('create_time desc')
                         ->limit(15)
                         ->select();
 
-        return $paotui;
+        return $paotuis;
     }
 
     public static function findByRecID($id,$page=1,$size=15)
     {
-        $paotui = self::findBy('rec_id',$id)
+        $paotuis = self::findBy('rec_id',$id)
                         ->order('create_time desc')
                         ->paginate($size,true,['page' => $page]);
         
-        return $paotui;
+        return $paotuis;
+    }
+
+    public static function judged($paotuis)
+    {
+        foreach ($paotuis as $paotui)
+        {
+            if($paotui['rec_judge'] == JudgeStatusEnum::unjudge)
+            {
+                $paotui['ranked'] = JudgeStatusEnum::unjudge - 1;
+            }
+            else
+            {
+                $paotui['ranked'] = JudgeStatusEnum::judge - 1;
+            }
+        }
+
+        return $paotuis;
     }
 
 

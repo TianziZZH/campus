@@ -16,6 +16,7 @@ use app\api\service\Publish as PulishService;
 use app\api\validate\PagingParameter;
 use app\api\service\Token as TokenService;
 use app\api\model\Paotui as PaotuiModel;
+use app\lib\exception\PaotuiException;
 use think\Exception;
 
 class User extends BaseController
@@ -50,11 +51,13 @@ class User extends BaseController
         $currentid = TokenService::getCurrentUid();
         
         $paotui = PaotuiModel::findByRecID($currentid,$page,$size);
+        $paotui = PaotuiModel::judged($paotui);
         
         if(!$paotui)
         {
-            throw new Exception([
-                'msg' => '未接收过任何任务'
+            throw new PaotuiException([
+                'msg' => '未接收过任何任务',
+                'errorCode' => 50008
             ]);
         }
         
