@@ -45,7 +45,9 @@ class Login extends BaseService
         $user = UserModel::getByUid($uid);
         $user->save([
             'scope' => $scope,
-            'school' => $school
+            'school' => $school,
+            'nickname' => $dataArray['nickname'],
+            'headimg' => $dataArray['avatar']
         ],['id'=>$uid]);
 
         return self::changCacheScope($scope,$school);
