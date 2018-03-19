@@ -11,6 +11,7 @@ namespace app\api\service;
 use app\api\model\Paotui as PaotuiModel;
 use app\api\model\User;
 use app\api\service\Token as TokenService;
+use app\lib\enum\JudgeStatusEnum;
 use app\lib\enum\TaskStatusEnum;
 use app\lib\exception\PaotuiException;
 use think\Db;
@@ -200,11 +201,11 @@ class Paotui extends BaseService
         // 如果当前uid是发布者
         if($currentuser['uid'] == $pro_id)
         {
-            self::ChangeGage($rec_id,$grade);
+            self::ChangeGage($rec_id,$grade,'rec_judge');
         }
         elseif($currentuser['uid'] == $rec_id)
         {
-            self::ChangeGage($pro_id,$grade);
+            self::ChangeGage($pro_id,$grade,'pro_judge');
         }
         else
         {
@@ -215,14 +216,16 @@ class Paotui extends BaseService
         }
     }
 
-    private function ChangeGage($id,$grade)
+    private function ChangeGage($id,$grade,$field='')
     {
         $user = User::getByUid($id);
         $original_grade = $user->judge;
 
         $g = self::GradeArithmetic($original_grade,$grade);
 
-        $user->save(['grade' => $g],['id'=>$id]);
+        $user->save([
+            'grade' => $g,
+            $field => JudgeStatusEnum::judge],['id'=>$id]);
     }
 
     private function GradeArithmetic($org_grade,$grade)
