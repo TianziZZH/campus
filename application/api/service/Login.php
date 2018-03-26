@@ -27,6 +27,10 @@ class Login extends BaseService
 
         $command = exec("E:\Program\StudyTool\Python\Python3\python3.exe E:\Study\Python\Learn\LearnPython\phptest.py $userid $password $school $uid", $Array, $ret);
 
+        // 上线后，这段代码需要删除！！！！
+        $ret = 0;
+        $Array[0] = ScopeEnum::Student;
+
         if($ret == 1){
             throw new LoginException([
                 'msg' => '登入超时',
@@ -75,7 +79,7 @@ class Login extends BaseService
         {
             throw new TokenException([
                 'msg' => '服务器缓存异常',
-                'errorcode' => 10005
+                'errorCode' => 10005
             ]);
         }
 
