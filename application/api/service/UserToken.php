@@ -147,39 +147,4 @@ class UserToken extends Token
         ]);
     }
 
-    private function pythonLogin($userid,$password,$school,$uid)
-    {
-        // python爬虫
-        $command = exec("E:\Program\StudyTool\Python\Python3\python3.exe E:\Study\Python\Learn\LearnPython\phptest.py $userid $password $school $uid", $Array, $ret);
-
-        if($ret == 1){
-            throw new LoginException([
-                'msg' => '登入超时',
-                'errorCode' => '20000'
-            ]);
-        }
-
-        $status = $Array[0];
-
-        if($status == ScopeEnum::Visitor)
-        {
-            throw new LoginException();
-        }
-
-        $user = UserModel::getByUid($uid);
-        $user->save([
-            'scope' => $status,
-        ]);
-
-        return $status;
-    }
-
-    private function pythonLoginError()
-    {
-        throw new LoginException([
-            'msg' => '现在是游客身份无法正常访问，请完成学校选择',
-            'errorCode' => '20002'
-        ]);
-    }
-
 }
