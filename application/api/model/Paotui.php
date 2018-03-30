@@ -67,6 +67,7 @@ class Paotui extends BaseModel
     public static function findByRecID($id,$page=1,$size=15)
     {
         $paotuis = self::findBy('rec_id',$id)
+                        ->with(['user','user.school'])
                         ->order('create_time desc')
                         ->paginate($size,true,['page' => $page]);
         
