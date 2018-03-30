@@ -112,28 +112,28 @@ class Paotui extends BaseService
 
         self::judgePaotui($id);
 
-        if($paotui->pro_id != $currentuser['uid'])
+        if($paotui->status != TaskStatusEnum::received)
         {
-            throw new PaotuiException([
-                'msg' => '只能取消自己发布的任务',
-                'errorCode' => 50007
-            ]);
-        }
+            if($paotui->rec_id != $currentuser['uid'])
+            {
+                throw new PaotuiException([
+                    'msg' => '只能取消自己接取的任务',
+                    'errorCode' => 50007
+                ]);
+            }
 
-        if($paotui->status < TaskStatusEnum::finished)
-        {
             $paotui->update([
-                'status' => TaskStatusEnum::cancel
+                'status' => TaskStatusEnum::released
             ],['id'=>$id]);
+
         }
         else
         {
             throw new PaotuiException([
-                'msg' => '只有处于待领取的任务，才能取消',
+                'msg' => '只有处于领取的任务，才能取消',
                 'errorCode' => 50006
             ]);
         }
-
 
     }
 
