@@ -32,7 +32,8 @@ class Information extends BaseModel
     
     public static function showByID($id)
     {
-        $information = self::where('id','=',$id)
+        $information = self::with('img')
+                            ->where('id','=',$id)
                             ->find();
         
         return $information;

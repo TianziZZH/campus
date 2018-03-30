@@ -64,7 +64,7 @@ class Login extends BaseService
         $value = [];
 
         $key = TokenService::generateToken();
-        $expire_in = $user['expires_in'];
+        $expire_in = config('setting.token_expire_in');
         $value['session_key'] = $user['session_key'];
         $value['expires_in'] = $expire_in;
         $value['openid'] = $user['openid'];

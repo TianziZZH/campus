@@ -16,7 +16,7 @@ use think\Db;
 
 class Paotui extends BaseModel
 {
-    protected $hidden = ['pro_id','rec_id','school','status','create_time','delete_time','update_time','pro_judge','rec_judge'];
+    protected $hidden = ['pro_id','rec_id','school','delete_time','update_time','pro_judge','rec_judge'];
     protected $autoWriteTimestamp = true;
 
     public function user()
