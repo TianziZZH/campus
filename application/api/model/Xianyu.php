@@ -15,7 +15,7 @@ use app\api\service\Token as ToeknService;
 
 class Xianyu extends BaseModel
 {
-    protected $hidden = ['update_time','delete_time','extend','headimg'];
+    protected $hidden = ['update_time','delete_time','extend'];
     protected $autoWriteTimestamp = true;
 
     public function img()

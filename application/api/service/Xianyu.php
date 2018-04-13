@@ -31,7 +31,7 @@ class Xianyu extends BaseService
         try
         {
             //存储图片
-            $imgs = $dataArray['img'];
+            $imgs = uploadimg('xianyu/');
             $ids = [];
             if($this->isNotEmpty($imgs))
             {

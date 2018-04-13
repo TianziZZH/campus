@@ -22,7 +22,7 @@
 
 use think\Route;
 
-Route::get('api/:version/test/:id','api/:version.Test/Test');
+Route::post('api/:version/test','api/:version.Test/Test');
 
 Route::post('api/:version/login','api/:version.Login/userLogin');
 

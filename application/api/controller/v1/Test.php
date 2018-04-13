@@ -15,22 +15,7 @@ class Test
 {
     public function Test()
     {
-//        (new IDMustBePositiveInt())->goCheck();
-//
-//        $imgs = [
-//            '1'=>'abc',
-//            '2'=>'bca',
-//            '3'=>'cba'
-//        ];
-//
-//        $list = [];
-//
-//        foreach ($imgs as $img=>$url)
-//        {
-//            $list[] = $url;
-//        }
-//
-//        return 1;
+        $img = uploadimg('xianyu/');
 
         echo 'Success';
     }

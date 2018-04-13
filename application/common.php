@@ -38,3 +38,25 @@ function getRandChars($length)
 
     return $str;
 }
+
+function uploadimg($dir)
+{
+    $file = request()->file('img');
+    if ($file) {
+        $dirname = 'images/'.$dir;
+        $info = $file->rule('RandImageName')->move($dirname);
+        if ($info) {
+            $img = [];
+            $file = $info->getFilename();
+            $img[] = '/'.$dir.$file;
+            return $img;
+        }
+    }
+
+    return null;
+}
+
+function RandImageName()
+{
+    return getRandChars(10);
+}

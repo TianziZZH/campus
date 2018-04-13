@@ -16,7 +16,6 @@ class XianyuValidate extends BaseValidate
         'summary' => 'require',
         'detail' => 'require',
         'price' => 'require|judgeNumeric',
-        'img' => 'JudgeImage'
     ];
     
     protected $message = [
@@ -24,7 +23,6 @@ class XianyuValidate extends BaseValidate
         'summary' => '简介不能为空',
         'detail' => '详情不能为空',
         'price' => '价格不符合规范',
-        'img' => '图片不符合规范'
     ];
 
     protected function judgeImage($value,$rule='',$data='',$field='')
