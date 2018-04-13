@@ -57,6 +57,7 @@ class Paotui extends BaseModel
     public static function fingByProID($id)
     {
         $paotuis = self::findBy('pro_id',$id)
+                        ->where('status','<=',TaskStatusEnum::received)
                         ->order('create_time desc')
                         ->limit(15)
                         ->select();

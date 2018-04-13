@@ -66,6 +66,7 @@ class Xianyu extends BaseModel
     public static function findByProID($id)
     {
         $xianyu = self::findBy('pro_id',$id)
+                        ->where('status','=',XianyuEnum::unexpire)
                         ->with(['img','items','items.img'])
                         ->order('create_time desc')
                         ->limit(5)

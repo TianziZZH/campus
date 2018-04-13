@@ -47,3 +47,4 @@ Route::get('api/:version/paotui/finish/:id','api/:version.Paotui/finish',[],['id
 Route::post('api/:version/paotui/create','api/:version.Paotui/create');
 Route::post('api/:version/paotui/judge','api/:version.Paotui/judge');
 Route::get('api/:version/paotui/cancel/:id','api/:version.Paotui/cancel');
+Route::get('api/:version/paotui/delete/:id','api/:version.Paotui/delete');
